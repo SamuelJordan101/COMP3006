@@ -5,8 +5,8 @@ let app = express();
 let path = require("path");
 let routes = require("./routes");
 
-//let url = "mongodb+srv://Sam:DJTuned101@financeapp.pnaly.mongodb.net/FinanceApp?retryWrites=true&w=majority";
-let url = "mongodb://localhost:27017/financeapp";
+let url = "mongodb+srv://Sam:DJTuned101@cluster.pnaly.mongodb.net/FinanceApp?retryWrites=true&w=majority";
+//let url = "mongodb://localhost:27017/financeapp";
 mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true});
 
 app.use(express.static(path.join(__dirname, "statics")));
