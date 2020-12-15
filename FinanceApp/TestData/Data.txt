@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5fd7907ffb640f3c15c18322"},"Transaction":[{"Date":"Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)","Amount":"1.00","Description":"McDonalds"},{"Date":"Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)","Amount":"5.00","Description":"KFC"}],"Balance":"346.12","Month":"1","Year":"2020"}
