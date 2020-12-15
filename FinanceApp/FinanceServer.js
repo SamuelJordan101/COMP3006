@@ -17,6 +17,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
 
 app.get("/Transactions", routes.listAllTransactions);
+app.get("/Users", routes.listAllUsers);
 
 app.listen(port, function() {
     console.log("Listening on " + port);
