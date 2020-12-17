@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>Finance</title>
+    <title>Home</title>
 
-    <script src="/Finance.js"></script>
-    <link rel="stylesheet" href="/Finance.css">
+    <script src="/JS/Finance.js"></script>
+    <link rel="stylesheet" href="/CSS/Finance.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -18,12 +18,26 @@
 
     <h1>Finance App</h1>
 
-    <h2>Balance: £<span id="Balance"></span></h2>
+    <h2>Balance: £ <%= Transactions[Transactions.length-1].Balance %> </h2>
 
     <div id="Graph">
         <canvas id="Expenses" style="width: 512px; height: 256px"></canvas>
 
         <script>
+            <% let Balance = []%>
+            <% let Month = []%>
+
+            <% for (let t=0;t<allTransactions.length;t++) {%>
+                <% Balance.push(allTransactions[t].Balance)%>
+                <% Month.push(allTransactions[t].Month)%>
+            <% } %>
+
+            var Balance = <%- JSON.stringify(Balance) %>;
+            var Month = <%- JSON.stringify(Month) %>;
+
+            console.log(Balance);
+            console.log(Month);
+
             var ctx = document.getElementById('Expenses').getContext('2d');
             var chart = new Chart(ctx, {
                 // The type of chart we want to create
@@ -31,12 +45,12 @@
 
                 // The data for our dataset
                 data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    labels: Month,
                     datasets: [{
                         label: 'Balance',
                         backgroundColor: 'rgb(0, 150, 255)',
                         borderColor: 'rgb(0, 100, 255)',
-                        data: [500.54, 245.54, 627.83, 936.16, 32.96, 350.83, 503.51]
+                        data: Balance
                     }]
                 },
 
@@ -56,13 +70,17 @@
                         }],
                         yAxes: [{
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: false
                             },
                             scaleLabel: {
                                 display: true,
                                 labelString: '£'
                             }
                         }]
+                    },
+                    title : {
+                        display: true,
+                        text: 'Balance for ' + <%= Transactions[Transactions.length-1].Year %>
                     }
                 }
             });
@@ -71,12 +89,29 @@
 
     <div id="Transactions">
         <h2>New Payment</h2>
-        <p>Add New Payment: £ <input type="number" min="1" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
+        <p>Amount: £ <input type="number" min="1" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
+        <p>Description: <input type="text"></p>
         <button id="NewPayment">Add Payment</button>
     </div>
 
     <div id="Amounts">
         <h2>Payments</h2>
+
+        <form id="Search" method="GET" action="/Home">
+            <button type="submit">View All Payments</button>
+        </form>
+        <form method="POST" action="/filtermonth"><a>Search Month: </a>
+            <select name="month">
+                <% for (z=0; z<allTransactions.length; z++) {%>
+                    <option value=<%= allTransactions[z].Month %>><%= allTransactions[z].Month %></option>
+                <% } %>
+            </select>
+            <input type="submit" value="Search">
+        </form>
+
+        
+        
+        
 
         <table id="Payments" style="width:80%">
             <thead>
@@ -84,28 +119,20 @@
                     <th>Date</th>
                     <th>Description</th>
                     <th>Amount</th>
-                    <th>Balance</th>
                     <th>Remove</th>
                 </tr>
             </thead>
 
             <% for(var i=0; i<Transactions.length; i++) {%>
-                <tbody>
-                    <td><%= Transactions[i].%></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button id= <% i %> >Remove Payment</button></td>
-                </tbody>
+                <%for(var x=0; x<Transactions[i].Payments.length; x++) { %>
+                    <tbody>
+                        <td><%= Transactions[i].Payments[x].Date %></td>
+                        <td><%= Transactions[i].Payments[x].Description %></td>
+                        <td>£<%= Transactions[i].Payments[x].Amount %></td>
+                        <td><button class="RemovePayment" id= <% i-x %> >Remove Payment</button></td>
+                    </tbody>
+                <% } %>
             <% } %>
-
-            <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>500</td>
-                <td><button id="RemovePayment">Remove Payment</button></td>
-            </tr>
         </table>
     </div>
 

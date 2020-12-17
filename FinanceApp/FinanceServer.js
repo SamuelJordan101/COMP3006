@@ -18,6 +18,8 @@ app.use(express.urlencoded({extended: true}));
 
 app.get("/Transactions", routes.listAllTransactions);
 app.get("/Users", routes.listAllUsers);
+app.get("/Home", routes.pageListTransactions);
+app.post("/filtermonth", routes.pageListTransactions);
 
 app.listen(port, function() {
     console.log("Listening on " + port);

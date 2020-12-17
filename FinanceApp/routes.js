@@ -7,8 +7,9 @@ async function listAllTransactions(request, response) {
 }
 
 async function pageListTransactions(request, response) {
-    let transaction = await db.getTransactions(request.body.month, request.body.year);
-    response.render("Finance", {"Transactions": transaction});
+    let transaction = await db.getTransactions(request.body.month);
+    let allTransaction = await db.getTransactions();
+    response.render("Finance", {"Transactions": transaction, "allTransactions": allTransaction});
 }
 
 async function listAllUsers(request, response) {

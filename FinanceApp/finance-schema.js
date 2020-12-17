@@ -1,12 +1,12 @@
 let mongoose = require("mongoose");
 
 let transactionSchema = new mongoose.Schema({
-    Transaction: [
+    Payments: [
         {Date: String, Amount: String, Description: String}
     ],
     Balance: String,
-    Month: String,
-    Year: String
+    Month: Number,
+    Year: Number
 });
 let Transaction = mongoose.model("Transaction", transactionSchema);
 
