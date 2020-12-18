@@ -17,7 +17,8 @@ async function loadLogin(request, response) {
 }
 
 async function findUser(request, response) {
-    let users = await db.getUsers(request.body.username, request.body.password);
+    let username = (request.body.username).toLowerCase();
+    let users = await db.getUsers(username, request.body.password);
     if (users) {
         response.redirect("/Home");
     } else {
