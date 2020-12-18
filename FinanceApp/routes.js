@@ -12,12 +12,20 @@ async function pageListTransactions(request, response) {
     response.render("Finance", {"Transactions": transaction, "allTransactions": allTransaction});
 }
 
-async function listAllUsers(request, response) {
-    let users = await db.getUsers({});
-    response.setHeader("content-type", "text/json");
-    response.send({"Users": users});
+async function loadLogin(request, response) {
+    response.render("Login", {"Correct": true});
+}
+
+async function findUser(request, response) {
+    let users = await db.getUsers(request.body.username, request.body.password);
+    if (users) {
+        response.redirect("/Home");
+    } else {
+        response.render("Login", {"Correct": false});
+    }
 }
 
 module.exports.listAllTransactions = listAllTransactions;
 module.exports.pageListTransactions = pageListTransactions;
-module.exports.listAllUsers = listAllUsers;
+module.exports.loadLogin = loadLogin;
+module.exports.findUser = findUser;

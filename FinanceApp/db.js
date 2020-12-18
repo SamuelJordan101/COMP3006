@@ -9,8 +9,8 @@ async function getTransactions(month) {
     return await models.Transaction.find(filter)
 }
 
-async function getUsers() {
-    return await models.User.find({});
+async function getUsers(name, password) {
+    return await models.User.findOne({Name: name, Password: password});
 }
 
 module.exports.getTransactions = getTransactions;

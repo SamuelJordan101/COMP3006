@@ -11,14 +11,22 @@
 </head>
 
 <body>
-    <h1>Login</h1>
+    <% if(Correct == false) { %>
+        <div class="header">
+            <p>Incorrect Username/Password</p>
+        </div>
+    <% } %>
+    
+    <div class="login">
+        <h1>Login</h1>
 
-    <div>
-        <p>Username: <input type="text" id="username"></p>
-        <p>Password: <input type="password" id="password"></p>
+        <form method="POST" action="/findUser">
+            <p>Username: <input type="text" name="username" value=""></p>
+            <p>Password: <input type="password" name="password" value=""></p>
+    
+            <button id="login">Login</button>
+        </form>
     </div>
-
-    <button id="login" onclick="location.href='Finance.html'">Login</button>
 </body>
 
 </html>

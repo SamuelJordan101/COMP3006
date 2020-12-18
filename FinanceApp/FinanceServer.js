@@ -1,5 +1,5 @@
 let mongoose = require("mongoose");
-let port = process.env.PORT || 9000;
+let port = process.env.port || 9000;
 let express = require("express");
 let app = express();
 let path = require("path");
@@ -16,8 +16,8 @@ app.set("view engine", "ejs");
 
 app.use(express.urlencoded({extended: true}));
 
-app.get("/Transactions", routes.listAllTransactions);
-app.get("/Users", routes.listAllUsers);
+app.post("/findUser", routes.findUser);
+app.get("/Login", routes.loadLogin);
 app.get("/Home", routes.pageListTransactions);
 app.post("/filtermonth", routes.pageListTransactions);
 

@@ -3,8 +3,6 @@
 
 <head>
     <title>Home</title>
-
-    <script src="/JS/Finance.js"></script>
     <link rel="stylesheet" href="/CSS/Finance.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,12 +11,13 @@
 <body>
 
     <ul>
-        <li><a href="Login.html">Logout</a></li>
+        <li><a href="Login">Logout</a></li>
     </ul>
 
     <h1>Finance App</h1>
 
-    <h2>Balance: £ <%= Transactions[Transactions.length-1].Balance %> </h2>
+    <h2>Balance: £ <%= Transactions[Transactions.length-1].Balance %>
+    </h2>
 
     <div id="Graph">
         <canvas id="Expenses" style="width: 512px; height: 256px"></canvas>
@@ -87,11 +86,13 @@
         </script>
     </div>
 
-    <div id="Transactions">
-        <h2>New Payment</h2>
-        <p>Amount: £ <input type="number" min="1" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
-        <p>Description: <input type="text"></p>
-        <button id="NewPayment">Add Payment</button>
+    <button type="button" class="collapsible" onclick="openForm()">New Payment</button>
+    <div class="content">
+        <form id="Add" method="POST" action="/NewPayment">
+            <p>Amount: £ <input type="number" min="0" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
+            <p>Description: <input type="text"></p>
+            <button id="NewPayment">Add Payment</button>
+        </form>
     </div>
 
     <div id="Amounts">
@@ -103,15 +104,12 @@
         <form method="POST" action="/filtermonth"><a>Search Month: </a>
             <select name="month">
                 <% for (z=0; z<allTransactions.length; z++) {%>
-                    <option value=<%= allTransactions[z].Month %>><%= allTransactions[z].Month %></option>
-                <% } %>
+                    <option value=<%=allTransactions[z].Month %>><%= allTransactions[z].Month %>
+                    </option>
+                    <% } %>
             </select>
-            <input type="submit" value="Search">
+            <input id type="submit" value="Search">
         </form>
-
-        
-        
-        
 
         <table id="Payments" style="width:80%">
             <thead>
@@ -126,10 +124,15 @@
             <% for(var i=0; i<Transactions.length; i++) {%>
                 <%for(var x=0; x<Transactions[i].Payments.length; x++) { %>
                     <tbody>
-                        <td><%= Transactions[i].Payments[x].Date %></td>
-                        <td><%= Transactions[i].Payments[x].Description %></td>
-                        <td>£<%= Transactions[i].Payments[x].Amount %></td>
-                        <td><button class="RemovePayment" id= <% i-x %> >Remove Payment</button></td>
+                        <td>
+                            <%= Transactions[i].Payments[x].Date %>
+                        </td>
+                        <td>
+                            <%= Transactions[i].Payments[x].Description %>
+                        </td>
+                        <td>£<%= Transactions[i].Payments[x].Amount %>
+                        </td>
+                        <td><button class="RemovePayment" id=<% i-x %> >Remove Payment</button></td>
                     </tbody>
                 <% } %>
             <% } %>
