@@ -26,7 +26,36 @@ async function findUser(request, response) {
     }
 }
 
+async function addPayment(request, response) {
+    let transaction = await db.getTransactions();
+    let balance = transaction[transaction.length-1].Balance;
+    let id = transaction[transaction.length-1]._id;
+
+    if(request.body.amount != undefined) {
+        balance = balance - request.body.amount;
+    }
+
+    let d = new Date();
+    let month = d.getMonth() + 1;
+    let year = d.getFullYear();
+    let currentDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+
+    let test = await db.findTransaction(month, year);
+
+    if(test == null) {
+        await db.addNewTransaction(balance, month, year, currentDate, request.body.amount * -1, request.body.description);
+    } else {
+        await db.addToTransaction(id, balance, currentDate, request.body.amount * -1, request.body.description)
+    }
+
+    transaction = await db.getTransactions();
+    let allTransaction = await db.getTransactions();
+
+    response.render("Finance", {"Transactions": transaction, "allTransactions": allTransaction});
+}
+
 module.exports.listAllTransactions = listAllTransactions;
 module.exports.pageListTransactions = pageListTransactions;
 module.exports.loadLogin = loadLogin;
 module.exports.findUser = findUser;
+module.exports.addPayment = addPayment;

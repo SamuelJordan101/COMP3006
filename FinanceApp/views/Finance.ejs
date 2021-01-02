@@ -86,15 +86,6 @@
         </script>
     </div>
 
-    <button type="button" class="collapsible" onclick="openForm()">New Payment</button>
-    <div class="content">
-        <form id="Add" method="POST" action="/NewPayment">
-            <p>Amount: £ <input type="number" min="0" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
-            <p>Description: <input type="text"></p>
-            <button id="NewPayment">Add Payment</button>
-        </form>
-    </div>
-
     <div id="Amounts">
         <h2>Payments</h2>
 
@@ -136,7 +127,12 @@
                     </tbody>
                 <% } %>
             <% } %>
-        </table>
+
+        <form id="Add" method="POST" action="/addpayment">
+            <p>Amount: £ <input type="number" name="amount" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
+            <p>Description: <input type="text" name="description"></p>
+            <button id="addpayment">Add Payment</button>
+        </form>
     </div>
 
 </body>

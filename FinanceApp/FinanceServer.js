@@ -20,6 +20,7 @@ app.post("/findUser", routes.findUser);
 app.get("/Login", routes.loadLogin);
 app.get("/Home", routes.pageListTransactions);
 app.post("/filtermonth", routes.pageListTransactions);
+app.post("/addpayment", routes.addPayment);
 
 app.listen(port, function() {
     console.log("Listening on " + port);

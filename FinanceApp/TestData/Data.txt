@@ -1,1 +1,14 @@
+        {_id: ObjectId(5fdaa839214dd151ec157eb5)},
+        {
+            $push: {
+                Balance: 514.12,
+                Payments: [{Date: "26-04-20 16:59:59", Amount: 10, Description: "Test"}]
+            }
+        }
+
+
 {"_id":{"$oid":"5fd7907ffb640f3c15c18322"},"Transaction":[{"Date":"Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)","Amount":"1.00","Description":"McDonalds"},{"Date":"Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)","Amount":"5.00","Description":"KFC"}],"Balance":"346.12","Month":"1","Year":"2020"}
+
+524.12
+
+update({_id: ObjectId('5fdaa839214dd151ec157eb5')}, {$push: {Balance: 514.12,Payments: [{Date: "26-04-20 16:59:59", Amount: 10, Description: "Nails"}]}})
