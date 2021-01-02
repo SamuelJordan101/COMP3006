@@ -36,9 +36,10 @@ async function addPayment(request, response) {
     }
 
     let d = new Date();
-    let month = d.getMonth() + 1;
+    let day = (d.getDate() < 10 ? '0' : '') + d.getDate();
+    let month = ((d.getMonth() + 1) < 10 ? '0' : '') + (d.getMonth() + 1);
     let year = d.getFullYear();
-    let currentDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    let currentDate = day + "-" + month + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
 
     let test = await db.findTransaction(month, year);
 
