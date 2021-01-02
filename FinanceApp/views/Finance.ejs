@@ -31,6 +31,8 @@
                 <% Month.push(allTransactions[t].Month)%>
             <% } %>
 
+            let titleText = "Balance for " + <%= allTransactions[0].Year %> + "/" + <%= allTransactions[allTransactions.length-1].Year %>;
+
             var Balance = <%- JSON.stringify(Balance) %>;
             var Month = <%- JSON.stringify(Month) %>;
 
@@ -79,7 +81,7 @@
                     },
                     title : {
                         display: true,
-                        text: 'Balance for ' + <%= Transactions[Transactions.length-1].Year %>
+                        text: titleText
                     }
                 }
             });

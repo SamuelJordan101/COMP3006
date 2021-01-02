@@ -2,9 +2,9 @@ let mongoose = require("mongoose");
 
 let transactionSchema = new mongoose.Schema({
     Payments: [
-        {_id: false, Date: String, Amount: String, Description: String}
+        {_id: false, Date: String, Amount: Number, Description: String}
     ],
-    Balance: String,
+    Balance: Number,
     Month: Number,
     Year: Number
 }, {versionKey: false});
