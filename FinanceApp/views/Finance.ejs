@@ -91,13 +91,13 @@
     <div id="Amounts">
         <h2>Payments</h2>
 
-        <div>
-            <form id="Add" method="POST" action="/addpayment">
-                <p>Amount: £ <input type="number" name="amount" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
-                <p>Description: <input type="text" name="description"></p>
-                <button id="addpayment">Add Payment</button>
-            </form>
-        </div>
+        <form id="Add" method="POST" action="/addpayment">
+            <p>Amount: £ <input type="number" name="amount" pattern="^\d*(\.\d{0,2})?$" step=".01"></p>
+            <p>Description: <input type="text" name="description"></p>
+            <button id="addpayment">Add Payment</button>
+        </form>
+
+        <hr class="solid">
 
         <form id="Search" method="GET" action="/Home">
             <button type="submit">View All Payments</button>
