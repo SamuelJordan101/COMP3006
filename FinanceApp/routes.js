@@ -39,20 +39,21 @@ async function addPayment(request, response) {
     let day = (d.getDate() < 10 ? '0' : '') + d.getDate();
     let month = ((d.getMonth() + 1) < 10 ? '0' : '') + (d.getMonth() + 1);
     let year = d.getFullYear();
-    let currentDate = day + "-" + month + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+    let minutes = (d.getMinutes()<10?'0':'') + d.getMinutes();
+    let hours = (d.getHours()<10?'0':'') + d.getHours();
+    let currentDate = day + "-" + month + "-" + d.getFullYear() + " " + hours + ":" + minutes;
 
     let test = await db.findTransaction(month, year);
 
+    let amount = (request.body.amount * -1).toFixed(2);
+
     if(test == null) {
-        await db.addNewTransaction(balance, month, year, currentDate, request.body.amount * -1, request.body.description);
+        await db.addNewTransaction(balance, month, year, currentDate, amount, request.body.description);
     } else {
-        await db.addToTransaction(id, balance, currentDate, request.body.amount * -1, request.body.description)
+        await db.addToTransaction(id, balance, currentDate, amount, request.body.description)
     }
 
-    transaction = await db.getTransactions();
-    let allTransaction = await db.getTransactions();
-
-    response.render("Finance", {"Transactions": transaction, "allTransactions": allTransaction});
+    response.redirect("/Home");
 }
 
 module.exports.listAllTransactions = listAllTransactions;
