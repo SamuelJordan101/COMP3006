@@ -56,8 +56,28 @@ async function addPayment(request, response) {
     response.redirect("/Home");
 }
 
+async function removePayment(request, response) {
+    let date = request.body.Date;
+    let month = date.substring(3,5);
+    let year = date.substring(6,10);
+
+    let transaction = await db.findTransaction(month, year);
+    let id = transaction._id;
+
+    if(transaction.Payments.length == 1) {
+        await db.removeTransaction(id)
+    } else {
+        await db.removePayment(id, date);
+    }
+
+    await db.calculateBalances();
+    
+    response.redirect("/Home");
+}
+
 module.exports.listAllTransactions = listAllTransactions;
 module.exports.pageListTransactions = pageListTransactions;
 module.exports.loadLogin = loadLogin;
 module.exports.findUser = findUser;
 module.exports.addPayment = addPayment;
+module.exports.removePayment = removePayment;

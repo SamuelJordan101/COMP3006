@@ -37,8 +37,52 @@ async function addToTransaction(id, balance, date, amount, description) {
     )
 }
 
+async function removePayment(id, date) {
+    return await models.Transaction.updateOne(
+        {_id: id},
+        {
+            $pull: {
+                Payments: {Date: date}
+            }
+        }
+    )
+}
+
+async function removeTransaction(id) {
+    return await models.Transaction.deleteOne(
+        {_id: id}
+    )
+}
+
+async function calculateBalances() {
+    let balance = 0;
+    let transactions = await getTransactions();
+
+    console.log(transactions[0].Payments[0]);
+
+    for (i=0;i<transactions.length; i++) {
+        for (x=0; x<transactions[i].Payments.length; x++) {
+            let temp = parseInt(transactions[i].Payments[x].Amount);
+            balance += temp;
+        }
+        await models.Transaction.updateOne(
+            {_id: transactions[i]._id},
+            {
+                $set: {
+                    Balance: balance
+                }
+            }
+        )
+    }
+
+    return;
+}
+
 module.exports.getTransactions = getTransactions;
 module.exports.getUsers = getUsers;
 module.exports.findTransaction = findTransaction;
 module.exports.addNewTransaction = addNewTransaction;
 module.exports.addToTransaction = addToTransaction;
+module.exports.removePayment = removePayment;
+module.exports.removeTransaction = removeTransaction;
+module.exports.calculateBalances = calculateBalances;

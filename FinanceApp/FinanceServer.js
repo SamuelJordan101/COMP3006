@@ -21,6 +21,8 @@ app.get("/Login", routes.loadLogin);
 app.get("/Home", routes.pageListTransactions);
 app.post("/filtermonth", routes.pageListTransactions);
 app.post("/addpayment", routes.addPayment);
+app.post("/removePayment", routes.removePayment);
+
 
 app.listen(port, function() {
     console.log("Listening on " + port);

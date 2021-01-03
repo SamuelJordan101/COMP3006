@@ -109,7 +109,7 @@
                     </option>
                     <% } %>
             </select>
-            <input id type="submit" value="Search">
+            <input type="submit" value="Search">
         </form>
 
         <table id="Payments" style="width:80%">
@@ -125,7 +125,7 @@
             <% for(var i=0; i<Transactions.length; i++) {%>
                 <%for(var x=0; x<Transactions[i].Payments.length; x++) { %>
                     <tbody>
-                        <td>
+                        <td> 
                             <%= Transactions[i].Payments[x].Date %>
                         </td>
                         <td>
@@ -133,7 +133,14 @@
                         </td>
                         <td>£<%= Transactions[i].Payments[x].Amount %>
                         </td>
-                        <td><button class="RemovePayment" id=<% i-x %> >Remove Payment</button></td>
+                        <td>
+                            <form method="POST" class="tblForm" action="/removePayment">
+                                <input name="Date" class="tblInvisible" value="<%= Transactions[i].Payments[x].Date %>">
+                                <input name="Description" class="tblInvisible" value="<%= Transactions[i].Payments[x].Description %>">
+                                <input name="Amount" class="tblInvisible" value="<%= Transactions[i].Payments[x].Amount %>">
+                                <button class="RemovePayment" type="submit">Remove Payment</button>
+                            </form>
+                        </td>
                     </tbody>
                 <% } %>
             <% } %>
