@@ -52,10 +52,11 @@
         <script>
             <% let Balance = []%>
             <% let Month = []%>
+            <% const monthNames = [0,"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; %>
 
             <% for (let t=0;t<allTransactions.length;t++) {%>
                 <% Balance.push(allTransactions[t].Balance)%>
-                <% Month.push(allTransactions[t].Month)%>
+                <% Month.push(monthNames[allTransactions[t].Month])%>
             <% } %>
 
             let titleText = "Balance for " + <%= allTransactions[0].Year %> + "/" + <%= allTransactions[allTransactions.length-1].Year %>;
@@ -78,7 +79,9 @@
                         label: 'Balance',
                         backgroundColor: 'rgb(0, 150, 255)',
                         borderColor: 'rgb(0, 100, 255)',
-                        data: Balance
+                        data: Balance,
+                        pointRadius: 7,
+                        pointHoverRadius: 15
                     }]
                 },
 
