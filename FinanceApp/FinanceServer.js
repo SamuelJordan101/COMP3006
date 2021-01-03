@@ -4,9 +4,10 @@ let express = require("express");
 let app = express();
 let path = require("path");
 let routes = require("./routes");
+let http = require("http");
+let socketIo = require("socket.io");
 
 let url = "mongodb+srv://Sam:DJTuned101@cluster.pnaly.mongodb.net/FinanceApp?retryWrites=true&w=majority";
-//let url = "mongodb://localhost:27017/financeapp";
 mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true});
 
 app.use(express.static(path.join(__dirname, "statics")));
@@ -23,7 +24,23 @@ app.post("/filtermonth", routes.pageListTransactions);
 app.post("/addpayment", routes.addPayment);
 app.post("/removePayment", routes.removePayment);
 
+let server = http.createServer(app);
+let io = socketIo(server)
 
-app.listen(port, function() {
+io.on("connection", function(socket) {
+    socket.emit("confirm connection", "Connected...");
+
+    socket.on("addedPayment", function() {
+        console.log("Received");
+        socket.broadcast.emit("newPayment");
+    });
+
+    socket.on("removedPayment", function() {
+        console.log("Received");
+        socket.broadcast.emit("delPayment");
+    });
+});
+
+server.listen(port, function() {
     console.log("Listening on " + port);
 })

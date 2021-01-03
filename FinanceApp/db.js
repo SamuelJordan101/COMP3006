@@ -58,8 +58,6 @@ async function calculateBalances() {
     let balance = 0;
     let transactions = await getTransactions();
 
-    console.log(transactions[0].Payments[0]);
-
     for (i=0;i<transactions.length; i++) {
         for (x=0; x<transactions[i].Payments.length; x++) {
             let temp = parseInt(transactions[i].Payments[x].Amount);
