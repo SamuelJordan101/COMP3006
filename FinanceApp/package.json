@@ -1,10 +1,14 @@
 {
-  "name": "wk10",
+  "name": "financeapp",
   "version": "1.0.0",
-  "description": "Sam's Finance App",
-  "main": "./FinanceApp/FinanceServer.js",
+  "description": "Sam's Finance app",
+  "main": "FinanceServer.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
@@ -13,11 +17,10 @@
     "supertest": "^6.0.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
     "mocha": "^8.2.1"
   },
   "scripts": {
-    "test": "mocha -u tdd"
+    "test": "mocha"
   },
   "author": "Sam Jordan",
   "license": "ISC"
