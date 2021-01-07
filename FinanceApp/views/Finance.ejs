@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="icon" href="/Images/icon.png">
     <link rel="stylesheet" href="/CSS/Finance.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
@@ -39,8 +40,8 @@
 <body>
 
     <ul>
-        <li><a href="Login">Logout</a></li>
-        <li style="float: left;"><a>Finance App</a></li>
+        <li class="Logout"><a href="Login">Logout</a></li>
+        <li class="Title"><a>Finance App</a></li>
 
     </ul>
 
@@ -130,13 +131,13 @@
             <p style="font-size: 10px;">Note: Please enter a negative number to add an incoming payment</p>
             <p>Amount: £ <input type="number" name="amount" id="amount" pattern="^\d*(\.\d{0,2})?$" step=".01" required></p>
             <p>Description: <input type="text" name="description" id="description" required></p>
-            <button id="addpayment">Add Payment</button>
+            <button class="PlainButton">Add Payment</button>
         </form>
 
         <hr class="solid">
 
         <form id="Search" method="GET" action="/Home">
-            <button type="submit">View All Payments</button>
+            <button class="PlainButton">View All Payments</button>
         </form>
         <form method="POST" action="/filtermonth"><a>Search Month: </a>
             <select name="month">
@@ -145,7 +146,7 @@
                     </option>
                     <% } %>
             </select>
-            <input type="submit" value="Search">
+            <button class="PlainButton">Search</button>
         </form>
 
         <table id="Payments" style="width:80%">

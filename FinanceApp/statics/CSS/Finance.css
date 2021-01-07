@@ -3,6 +3,19 @@ body {
     text-align: center;
 }
 
+select {
+    padding: 5px 10px;
+    margin: 2px;
+}
+
+.PlainButton {
+    text-decoration: none;
+    text-align: center;
+    border: solid 1px black;
+    padding: 5px 20px;
+    margin: 2px;
+}
+
 .RemovePayment {
     display: inline-block;
     width: 100%;
@@ -12,6 +25,14 @@ body {
     font-weight: bold;
     cursor: pointer;
     background: red;
+}
+
+.Logout {
+    background-color:rgb(0, 100, 255);
+}
+
+.Title{
+    float: left;
 }
 
 form{
