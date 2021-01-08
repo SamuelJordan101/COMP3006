@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" href="/Images/icon.png">
+    <link rel="stylesheet" href="/CSS/Finance.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(function() {
+            let socket = io("http://localhost:9000");
+
+            socket.on("confirm connection", function(msg) {
+                    console.log(msg);
+                });
+
+            socket.on("newPayment", function(msg) {
+                if(!alert('New payment added!')){window.location.reload();}
+            })
+
+            $("#Add").submit(function(event) {
+                socket.emit("addedPayment");
+            })
+
+            socket.on("delPayment", function(msg) {
+                if(!alert('Payment has been removed!')){window.location.reload();}
+            })
+
+            $(".tblForm").submit(function(event) {
+                socket.emit("removedPayment");
+            })
+        })
+    </script>
+</head>
+
+<body>
+
+    <ul>
+        <li class="Logout"><a href="Login">Logout</a></li>
+        <li class="Title"><a>Finance App</a></li>
+
+    </ul>
+
+    <h2>Balance: £ <%= (Transactions[Transactions.length-1].Balance).toFixed(2) %>
+    </h2>
+
+    <div id="Graph">
+        <canvas id="Expenses" style="width: 512px; height: 256px"></canvas>
+
+        <script>
+            <% let Balance = []%>
+            <% let Month = []%>
+            <% const monthNames = [0,"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; %>
+
+            <% for (let t=0;t<allTransactions.length;t++) {%>
+                <% Balance.push(allTransactions[t].Balance)%>
+                <% Month.push(monthNames[allTransactions[t].Month])%>
+            <% } %>
+
+            let titleText = "Balance for " + <%= allTransactions[0].Year %> + "/" + <%= allTransactions[allTransactions.length-1].Year %>;
+
+            var Balance = <%- JSON.stringify(Balance) %>;
+            var Month = <%- JSON.stringify(Month) %>;
+
+            console.log(Balance);
+            console.log(Month);
+
+            var ctx = document.getElementById('Expenses').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: Month,
+                    datasets: [{
+                        label: 'Balance',
+                        backgroundColor: 'rgb(0, 150, 255)',
+                        borderColor: 'rgb(0, 100, 255)',
+                        data: Balance,
+                        pointRadius: 7,
+                        pointHoverRadius: 15
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Month'
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: '£'
+                            }
+                        }]
+                    },
+                    title : {
+                        display: true,
+                        text: titleText
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <div >
+
+    </div>
+
+    <div id="Amounts">
+        <h2>Payments</h2>
+
+        <form id="Add" method="POST" action="/addpayment">
+            <p style="font-size: 10px;">Note: Please enter a negative number to add an incoming payment</p>
+            <p>Amount: £ <input type="number" name="amount" id="amount" pattern="^\d*(\.\d{0,2})?$" step=".01" required></p>
+            <p>Description: <input type="text" name="description" id="description" required></p>
+            <button class="PlainButton">Add Payment</button>
+        </form>
+
+        <hr class="solid">
+
+        <form id="Search" method="GET" action="/Home">
+            <button class="PlainButton">View All Payments</button>
+        </form>
+        <form method="POST" action="/filtermonth"><a>Search Month: </a>
+            <select name="month">
+                <% for (z=0; z<allTransactions.length; z++) {%>
+                    <option value=<%=allTransactions[z].Month %>><%= allTransactions[z].Month %>
+                    </option>
+                    <% } %>
+            </select>
+            <button class="PlainButton">Search</button>
+        </form>
+
+        <table id="Payments" style="width:80%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+
+            <% for(var i=0; i<Transactions.length; i++) {%>
+                <%for(var x=0; x<Transactions[i].Payments.length; x++) { %>
+                    <tbody>
+                        <td> 
+                            <%= Transactions[i].Payments[x].Date %>
+                        </td>
+                        <td>
+                            <%= Transactions[i].Payments[x].Description %>
+                        </td>
+                        <td>£<%= Transactions[i].Payments[x].Amount %>
+                        </td>
+                        <td>
+                            <form method="POST" class="tblForm" action="/removePayment">
+                                <input name="Date" class="tblInvisible" value="<%= Transactions[i].Payments[x].Date %>">
+                                <input name="Description" class="tblInvisible" value="<%= Transactions[i].Payments[x].Description %>">
+                                <input name="Amount" class="tblInvisible" value="<%= Transactions[i].Payments[x].Amount %>">
+                                <button class="RemovePayment" type="submit">Remove Payment</button>
+                            </form>
+                        </td>
+                    </tbody>
+                <% } %>
+            <% } %>
+    </div>
+
+</body>
+
+</html>
