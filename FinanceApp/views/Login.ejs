@@ -9,11 +9,39 @@
     <link rel="stylesheet" href="/CSS/Login.css">
 </head>
 
+<script>
+    if(localStorage.StayLoggedIn == "True") {
+        localStorage.LoggedIn = "True";
+        window.location.href = '/Home';
+    }
+
+    function check() {
+        if(document.getElementById("StayLoggedIn").checked) {
+            localStorage.StayLoggedIn = "True";
+        } else {
+            localStorage.StayLoggedIn = "False";
+        }
+    }
+</script>
+
 <body>
     <% if(Correct == false) { %>
         <div class="header">
             <p>Incorrect Username/Password</p>
         </div>
+        <script>
+        localStorage.StayLoggedIn = "False"; 
+        localStorage.LoggedIn = "False";
+        </script>
+    <% } else if (Correct == true) { %>
+        <script>
+        localStorage.LoggedIn = "True"; 
+        window.location.href = '/Home';
+        </script>
+    <% } else { %>
+        <script>
+            localStorage.LoggedIn = "False"; 
+        </script>
     <% } %>
     
     <div class="login">
@@ -22,6 +50,7 @@
         <form method="POST" action="/findUser">
             <p>Username: <input type="text" name="username" value="" required></p>
             <p>Password: <input type="password" name="password" value="" required></p>
+            <p id="Stay">Stay Logged In: <input type="checkbox" id="StayLoggedIn" onclick="check()"></p>
             <button id="login">Login</button>
         </form>
     </div>

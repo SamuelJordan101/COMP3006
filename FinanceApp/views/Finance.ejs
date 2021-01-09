@@ -34,6 +34,14 @@
             $(".tblForm").submit(function(event) {
                 socket.emit("removedPayment");
             })
+
+            $("#Logout").click(function() {
+                localStorage.StayLoggedIn = "False";
+            })
+
+            if(localStorage.LoggedIn != "True") {
+                window.location.href = '/Login';
+            }
         })
     </script>
 </head>
@@ -41,7 +49,7 @@
 <body>
 
     <ul>
-        <li class="Logout"><a href="Login">Logout</a></li>
+        <li class="Logout"><a href="Login" id="Logout">Logout</a></li>
         <li class="Title"><a>Finance App</a></li>
 
     </ul>

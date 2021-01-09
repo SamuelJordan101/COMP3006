@@ -13,14 +13,14 @@ async function pageListTransactions(request, response) {
 }
 
 async function loadLogin(request, response) {
-    response.render("Login", {"Correct": true});
+    response.render("Login", {"Correct": null});
 }
 
 async function findUser(request, response) {
     let username = (request.body.username).toLowerCase();
     let users = await db.getUsers(username, request.body.password);
     if (users) {
-        response.redirect("/Home");
+        response.render("Login", {"Correct": true});
     } else {
         response.render("Login", {"Correct": false});
     }

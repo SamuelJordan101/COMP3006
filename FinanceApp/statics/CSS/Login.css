@@ -11,6 +11,10 @@ body {
     font-family: Arial, Helvetica,S sans-serif;
 }
 
+#Stay {
+    font-size:smaller;
+}
+
 .header {
     text-align: center;
     background: red;
