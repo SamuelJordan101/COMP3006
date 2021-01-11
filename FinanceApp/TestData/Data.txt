@@ -1,14 +1,13 @@
-        {_id: ObjectId(5fdaa839214dd151ec157eb5)},
-        {
-            $push: {
-                Balance: 514.12,
-                Payments: [{Date: "26-04-20 16:59:59", Amount: 10, Description: "Test"}]
-            }
-        }
+Transactions:
 
+{"_id":{"$oid":"5fd93110ef2968380c4f15e4"},"Balance":-5,"Month":10,"Year":2020,"Payments":[{"Date":"25-10-2020 10:00","Amount":{"$numberDecimal":"-5.00"},"Description":"KFC"}]}
 
-{"_id":{"$oid":"5fd7907ffb640f3c15c18322"},"Transaction":[{"Date":"Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)","Amount":"1.00","Description":"McDonalds"},{"Date":"Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)","Amount":"5.00","Description":"KFC"}],"Balance":"346.12","Month":"1","Year":"2020"}
+{"_id":{"$oid":"5fd7907ffb640f3c15c18322"},"Balance":-25,"Month":11,"Year":2020,"Payments":[{"Date":"01-11-2020 12:00","Amount":{"$numberDecimal":"-5.50"},"Description":"McDonalds"},{"Date":"05-11-2020 16:30","Amount":{"$numberDecimal":"-15.00"},"Description":"KFC"}]}
 
-524.12
+{"_id":{"$oid":"5fdaa839214dd151ec157eb5"},"Balance":168,"Month":12,"Year":2020,"Payments":[{"Date":"03-12-2020 12:00","Amount":{"$numberDecimal":"-7.50"},"Description":"Pizza Hut"},{"Date":"25-12-2020 16:30","Amount":{"$numberDecimal":"200"},"Description":"Temporary Work"}]}
 
-update({_id: ObjectId('5fdaa839214dd151ec157eb5')}, {$push: {Balance: 514.12,Payments: [{Date: "26-04-20 16:59:59", Amount: 10, Description: "Nails"}]}})
+Users:
+
+{"_id":{"$oid":"5ff2078ba94fa0bf9c85841a"},"Name":"test","Password":"test"}
+
+{"_id":{"$oid":"5fd930a8ac0aebcd1c9d616a"},"Name":"sam","Password":"Admin"}
